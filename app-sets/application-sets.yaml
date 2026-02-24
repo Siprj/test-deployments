@@ -6,6 +6,7 @@ spec:
   goTemplate: true
   goTemplateOptions: ["missingkey=error"]
   generators:
+    - bla:
     - list:
       elements:
       - barnch: name-1
