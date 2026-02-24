@@ -1,30 +1,26 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: myapps
+  name: guestbook
 spec:
   goTemplate: true
   goTemplateOptions: ["missingkey=error"]
   generators:
-    - bla:
-    - list:
+  - list:
       elements:
-      - barnch: name-1
-        number: 1
-      - barnch: name-2
-        number: 2
+      - cluster: engineering-dev
+        url: https://kubernetes.default.svc
+      - cluster: engineering-prod
+        url: https://kubernetes.default.svc
   template:
     metadata:
-      name: 'myapp-{{.branch}}-{{.number}}'
+      name: '{{.cluster}}-guestbook'
     spec:
+      project: default
       source:
-        repoURL: 'https://github.com/Siprj/test-deployments.git'
-        path: kubernetes/
-        kustomize:
-          nameSuffix: '{{.branch}}'
-          commonLabels:
-            app.kubernetes.io/instance: '{{.branch}}-{{.number}}'
-      project: "kwakwa"
+        repoURL: https://github.com/argoproj/argo-cd.git
+        targetRevision: HEAD
+        path: applicationset/examples/list-generator/guestbook/{{.cluster}}
       destination:
-        server: https://kubernetes.default.svc
-        namespace: test-app
+        server: '{{.url}}'
+        namespace: guestbook
