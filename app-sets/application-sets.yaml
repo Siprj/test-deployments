@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: myapps
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+  - pullRequest:
+      github:
+        owner: Siprj
+        repo: test-deployments
+        labels:
+        - deploy
+      requeueAfterSeconds: 1800
+  template:
+    metadata:
+      name: 'myapp-{{.branch}}-{{.number}}'
+    spec:
+      source:
+        repoURL: 'https://github.com/siprj/test-deployments.git'
+        path: kubernetes/
+        kustomize:
+          nameSuffix: '{{.branch}}'
+          commonLabels:
+            app.kubernetes.io/instance: '{{.branch}}-{{.number}}'
+      project: "kwakwa"
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: test-app
