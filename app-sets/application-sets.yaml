@@ -12,7 +12,7 @@ spec:
           repo: test-deployments
           labels:
           - deploy
-        requeueAfterSeconds: 1800
+        requeueAfterSeconds: 60
   template:
     metadata:
       name: 'myapp-{{.branch}}-{{.number}}'
