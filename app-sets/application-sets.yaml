@@ -6,12 +6,13 @@ spec:
   goTemplate: true
   goTemplateOptions: ["missingkey=error"]
   generators:
-    - list:
-        elements:
-        - branch: name-1
-          number: 1
-        - branch: name-2
-          number: 2
+    - pullRequest:
+        github:
+          owner: Siprj
+          repo: test-deployments
+          labels:
+          - deploy
+        requeueAfterSeconds: 1800
   template:
     metadata:
       name: 'myapp-{{.branch}}-{{.number}}'
