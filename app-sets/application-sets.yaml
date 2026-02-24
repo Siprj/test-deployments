@@ -8,9 +8,9 @@ spec:
   generators:
     - list:
         elements:
-        - barnch: name-1
+        - branch: name-1
           number: 1
-        - barnch: name-2
+        - branch: name-2
           number: 2
   template:
     metadata:
