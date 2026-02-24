@@ -23,7 +23,3 @@ spec:
           nameSuffix: '{{.branch}}'
           commonLabels:
             app.kubernetes.io/instance: '{{.branch}}-{{.number}}'
-      project: "kwakwa"
-      destination:
-        server: https://kubernetes.default.svc
-        namespace: test-app
